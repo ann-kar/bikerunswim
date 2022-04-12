@@ -6,6 +6,6 @@ export interface IStandardResponse {
   error?: string;
 }
 
-interface IApi {
+export interface IApi {
   sendWorkout(data: IWorkout): Promise<IStandardResponse>;
 }
