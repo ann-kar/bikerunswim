@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 
+import {MockApi} from "../mocks/mockApi";
 import { IWorkout, IPartialWorkout, Discipline } from "../interfaces/IWorkout";
 import { Header } from "../components/Header";
 import {
@@ -33,9 +34,12 @@ const AddWorkout: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Workout>({ resolver });
-  const onSubmit = (data: Workout) => {
+  const onSubmit = async (data: Workout) => {
     console.log(data);
+    const response = await MockApi.sendWorkout(data);
+    console.log(response);
   };
+
   const [workoutParts, setWorkoutParts] = useState<IPartialWorkout[]>([]);
   const [disciplines, setDisciplines] = useState<Discipline[]>([]);
 
