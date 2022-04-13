@@ -12,8 +12,8 @@ export class PartialWorkout implements IPartialWorkout {
   @IsString()
   @IsIn(["swimming", "biking", "running"])
   discipline!: Discipline;
-  @Min(1)
   @IsInt()
+  @Min(1)
   durationInSeconds!: number;
 }
 
@@ -77,7 +77,10 @@ export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
               id="durationInSeconds"
               type="time"
               step="1"
-              {...register("durationInSeconds")}
+
+              {...register("durationInSeconds", {
+                setValueAs: (v) => ((Number((v[0] + v[1])) * 3600) +(Number((v[3] + v[4])) * 60) + (Number((v[6] + v[7]))))
+              })}
               defaultValue={0}
             />
           </div>

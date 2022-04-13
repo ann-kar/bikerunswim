@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 
-import {MockApi} from "../mocks/mockApi";
+import { MockApi } from "../mocks/mockApi";
 import { IWorkout, IPartialWorkout, Discipline } from "../interfaces/IWorkout";
 import { Header } from "../components/Header";
 import {
@@ -81,7 +81,7 @@ const AddWorkout: NextPage = () => {
               name="discipline"
               value="running"
               icon="running.svg"
-              onChange={(e:any) => handleDisciplineChoice(e.target.value)}
+              onChange={(e: any) => handleDisciplineChoice(e.target.value)}
             />
           </div>
         </form>
@@ -107,7 +107,6 @@ const AddWorkout: NextPage = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="container mx-auto w-10/12 max-w-[300px]"
         >
-
           {workoutParts &&
             workoutParts.map((part, i) => {
               return (
@@ -121,7 +120,7 @@ const AddWorkout: NextPage = () => {
                   <input
                     className="hidden"
                     {...register(`parts.${i}.distanceInMeters`, {
-                      setValueAs: (v) => Number(v)
+                      setValueAs: (v) => Number(v),
                     })}
                     id="parts"
                     value={part.distanceInMeters}
@@ -129,7 +128,7 @@ const AddWorkout: NextPage = () => {
                   <input
                     className="hidden"
                     {...register(`parts.${i}.durationInSeconds`, {
-                      setValueAs: (v) => ((Number((v[0] + v[1])) * 3600) +(Number((v[3] + v[4])) * 60) + (Number((v[6] + v[7]))))
+                      setValueAs: (v) => Number(v),
                     })}
                     id="parts"
                     value={part.durationInSeconds}
