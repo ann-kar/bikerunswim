@@ -1,32 +1,35 @@
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { IsDateString, Min, Max, IsString, IsIn } from "class-validator";
+import { Min, IsString, IsIn, IsInt, Max } from "class-validator";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IPartialWorkout, Discipline } from "../interfaces/IWorkout";
-import { RadioInput } from "./RadioInput";
 
 export class PartialWorkout implements IPartialWorkout {
-  @IsDateString()
-  date!: string;
-  @Min(0)
-  @Max(100000)
+  @Min(1)
+  @IsInt()
+  @Max(10000000)
   distanceInMeters!: number;
   @IsString()
   @IsIn(["swimming", "biking", "running"])
   discipline!: Discipline;
+  @Min(1)
+  @IsInt()
   durationInSeconds!: number;
 }
 
 const resolver = classValidatorResolver(PartialWorkout);
 
-export const PartialWorkoutForm = ({parts, setParts}:any) => {
+export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PartialWorkout>({ resolver });
-  const onSubmit = (data: PartialWorkout) => setParts((prevParts:PartialWorkout[]) => [...prevParts,{data}]);
-  const [results, setResults] = useState<PartialWorkout>();
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const onSubmit = (data: PartialWorkout) => {
+    setIsDisabled(true);
+    setParts((prevParts: PartialWorkout[]) => [...prevParts, data]);
+  };
 
   return (
     <form
@@ -34,55 +37,21 @@ export const PartialWorkoutForm = ({parts, setParts}:any) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="radio-group my-6 mt-8">
-          <RadioInput
-            register={register}
-            name="discipline"
-            value="biking"
-            icon="biking.svg"
-          />
-          <RadioInput
-            register={register}
-            name="discipline"
-            value="swimming"
-            icon="swimming.svg"
-          />
-          <RadioInput
-            register={register}
-            name="discipline"
-            value="running"
-            icon="running.svg"
-          />
-        </div>
-        <p className="w-full text-red-500 text-xs italic">
-          {errors.discipline?.message}
-        </p>
-        <div className="w-full before:after: px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
-          >
-            Date
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight input-focus"
-            id="grid-first-name"
-            type="date"
-            defaultValue="2022-04-02"
-            {...register("date")}
-          />
-          <p className="text-red-500 text-xs italic">{errors.date?.message}</p>
-        </div>
+        <h2 className="w-full text-center my-4 uppercase text-lg">
+          {discipline}
+        </h2>
+        <input type="hidden" value={discipline} {...register("discipline")} />
+
         <div className="w-full px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
+            htmlFor="distanceInMeters"
           >
             DISTANCE IN KM
           </label>
           <input
             className="appearance-none block w-full bg-gray-100 text-gray-700 border   rounded py-3 px-4 mb-3 leading-tight  input-focus"
-            id="grid-first-name"
+            id="distanceInMeters"
             type="number"
             defaultValue={2.25}
             step={0.01}
@@ -91,7 +60,8 @@ export const PartialWorkoutForm = ({parts, setParts}:any) => {
             })}
           />
           <p className="text-red-500 text-xs italic">
-            {errors.distanceInMeters?.message || "no error"}
+            {errors.distanceInMeters?.message &&
+              "distance must be greater than zero"}
           </p>
         </div>
         <div className="w-full px-3 mb-6 md:mb-0">
@@ -113,10 +83,14 @@ export const PartialWorkoutForm = ({parts, setParts}:any) => {
           </div>
           <p className="text-red-500 text-xs italic">
             {errors.durationInSeconds?.message}
+            {errors.discipline?.message}
           </p>
         </div>
-        <button className="mx-auto my-4 hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white">
-          submit
+        <button
+          disabled={isDisabled}
+          className="disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-300 full-w mx-auto my-4 hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white"
+        >
+          save this part
         </button>
       </div>
     </form>
