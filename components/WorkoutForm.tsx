@@ -26,41 +26,50 @@ export class Workout implements IWorkout {
 
 const resolver = classValidatorResolver(Workout);
 
-export const WorkoutForm = ({defaultData}: {defaultData?: IWorkout}) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm<Workout>({ resolver });
-      const onSubmit = async (data: Workout) => {
-        console.log(data);
-        const response = await MockApi.sendWorkout(data);
-        console.log(response);
-      };
+export const WorkoutForm = ({ defaultData }: { defaultData?: IWorkout }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Workout>({ resolver });
+  const onSubmit = async (data: Workout) => {
+    console.log(data);
+    const response = await MockApi.sendWorkout(data);
+    console.log(response);
+  };
 
-      const [workoutParts, setWorkoutParts] = useState<IPartialWorkout[]>([]);
-      const [disciplines, setDisciplines] = useState<Discipline[]>([]);
+  const [workoutParts, setWorkoutParts] = useState<IPartialWorkout[]>([]);
+  const [disciplines, setDisciplines] = useState<Discipline[]>([]);
 
-      useEffect(() => {
-        workoutParts.filter((part) => disciplines.includes(part.discipline));
-      }, [disciplines]);
+  useEffect(() => {
+    workoutParts.filter((part) => disciplines.includes(part.discipline));
+  }, [disciplines]);
 
-      const handleDisciplineChoice = (value: any) => {
-        setDisciplines((prevDisciplines: Discipline[]) => {
-          if (prevDisciplines.includes(value)) {
-            return prevDisciplines.filter((el) => el !== value);
-          } else {
-            return [...prevDisciplines, value];
-          }
-        });
-      };
+  const handleDisciplineChoice = (value: any) => {
+    setDisciplines((prevDisciplines: Discipline[]) => {
+      if (prevDisciplines.includes(value)) {
+        return prevDisciplines.filter((el) => el !== value);
+      } else {
+        return [...prevDisciplines, value];
+      }
+    });
+  };
 
-    return (
-        <>
-        <form className="container mx-auto w-10/12 max-w-[300px]">
-        <h2 className="mt-8 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-          Sports practiced:
-        </h2>
+  return (
+    <>
+      <form className="container mx-auto w-10/12 max-w-[300px]">
+        <label className="block mb-2 mt-6 standard-label" htmlFor="date">
+          Date
+        </label>
+        <input
+          className="block w-full mb-3 standard-input input-focus"
+          id="date"
+          type="date"
+          defaultValue="2022-04-02"
+          {...register("date")}
+        />
+        <p className="error">{errors.date?.message}</p>
+        <h2 className="block mb-2 mt-6 standard-label">Sports practiced</h2>
         <div className="radio-group">
           <CheckboxInput
             register={register}
@@ -76,7 +85,7 @@ export const WorkoutForm = ({defaultData}: {defaultData?: IWorkout}) => {
             icon="running.svg"
             onChange={(e: any) => handleDisciplineChoice(e.target.value)}
           />
-                    <CheckboxInput
+          <CheckboxInput
             register={register}
             name="discipline"
             value="swimming"
@@ -86,18 +95,12 @@ export const WorkoutForm = ({defaultData}: {defaultData?: IWorkout}) => {
         </div>
       </form>
       {disciplines.includes("biking") && (
-        <PartialWorkoutForm
-          discipline={"biking"}
-          setParts={setWorkoutParts}
-        />
+        <PartialWorkoutForm discipline={"biking"} setParts={setWorkoutParts} />
       )}
       {disciplines.includes("running") && (
-        <PartialWorkoutForm
-          discipline={"running"}
-          setParts={setWorkoutParts}
-        />
+        <PartialWorkoutForm discipline={"running"} setParts={setWorkoutParts} />
       )}
-       {disciplines.includes("swimming") && (
+      {disciplines.includes("swimming") && (
         <PartialWorkoutForm
           discipline={"swimming"}
           setParts={setWorkoutParts}
@@ -137,33 +140,21 @@ export const WorkoutForm = ({defaultData}: {defaultData?: IWorkout}) => {
             );
           })}
         <input type="hidden" value="sampleUserId" {...register("userId")} />
-        <div className="w-full before:after: px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
-          >
-            Date
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight input-focus"
-            id="grid-first-name"
-            type="date"
-            defaultValue="2022-04-02"
-            {...register("date")}
-          />
-          <p className="text-red-500 text-xs italic">
-            {errors.date?.message}
-          </p>
-        </div>
+        <label
+          className="w-full block mb-2 mt-6 standard-label"
+          htmlFor="notes"
+        >
+          Notes
+        </label>
         <textarea
-          className="border-2 border-blue-300 container mx-auto w-10/12 max-w-[300px]"
+          className="input-focus min-w-full rounded border-2 border-blue-300"
           {...register("notes")}
         ></textarea>
-        <button className="full-w mx-auto mt-1 mb-8 hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white">
+        {errors.notes?.message}
+        <button className="full-w mx-auto mt-6 mb-8 hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white">
           submit workout
         </button>
-        {errors.notes?.message}
       </form>
-      </>
-    )
-}
+    </>
+  );
+};
