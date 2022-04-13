@@ -3,6 +3,7 @@ import { Min, IsString, IsIn, IsInt, Max } from "class-validator";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IPartialWorkout, Discipline } from "../interfaces/IWorkout";
+import { DistanceInput } from "./DistanceInput";
 
 export class PartialWorkout implements IPartialWorkout {
   @Min(1)
@@ -49,20 +50,7 @@ export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
           >
             DISTANCE IN KM
           </label>
-          <input
-            className="appearance-none block w-full bg-gray-100 text-gray-700 border   rounded py-3 px-4 mb-3 leading-tight  input-focus"
-            id="distanceInMeters"
-            type="number"
-            defaultValue={2.25}
-            step={0.01}
-            {...register("distanceInMeters", {
-              setValueAs: (v) => Number(v) * 1000,
-            })}
-          />
-          <p className="text-red-500 text-xs italic">
-            {errors.distanceInMeters?.message &&
-              "distance must be greater than zero"}
-          </p>
+          <DistanceInput register={register} errors={errors}/>
         </div>
         <div className="w-full px-3 mb-6 md:mb-0">
           <label
