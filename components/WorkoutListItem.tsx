@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { IWorkout } from "../interfaces/IWorkout";
+import { MockApi } from "../mocks/mockApi";
 
 export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [workoutData, setWorkoutData] = useState<IWorkout | null>(workout);
+
+  const deleteWorkout = () => {
+    if (workout.workoutId) {
+      MockApi.deleteWorkout(workout.workoutId);
+      setWorkoutData(null);
+    }
+  };
 
   const handleClick = () => {
     isOpen ? setIsOpen(false) : setIsOpen(true);
@@ -18,6 +27,10 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
     const secs = stringifyTime(seconds % 60);
     return `${hrs} : ${mins} : ${secs}`;
   };
+
+  if (!workoutData) {
+    return null;
+  }
 
   return (
     <>
@@ -40,6 +53,9 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
         <button onClick={handleClick} className="text-sm hover:font-semibold">
           details
         </button>
+        <span onClick={deleteWorkout} className="cursor-pointer">
+          <img src="/delete_icon.svg" className="ml-2 h-5 w-5" />
+        </span>
       </div>
       {isOpen && (
         <div>
@@ -48,6 +64,9 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
               <th className="p-1 bg-slate-100/50">discipline</th>
               <th className="bg-slate-100/50">distance</th>
               <th className="bg-slate-100/50">duration</th>
+              <th colSpan={2} className="bg-slate-100/50">
+                &nbsp;
+              </th>
             </thead>
             <tbody className=" ">
               {workout.parts.map((part) => {
@@ -56,7 +75,9 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
                     <td className="p-2 text-xs font-semibold">
                       {part.discipline.toUpperCase()}
                     </td>
-                    <td className="p-2">{part.distanceInMeters / 1000} km</td>
+                    <td className="p-4 flex justify-center align-center">
+                      <span>{part.distanceInMeters / 1000} km</span>
+                    </td>
                     <td className="p-2">{toHours(part.durationInSeconds)}</td>
                   </tr>
                 );
