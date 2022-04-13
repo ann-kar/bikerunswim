@@ -62,6 +62,15 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
                 );
               })}
             </tbody>
+            <tfoot className="border-t bg-stone-100/50">
+              <tr>
+                <td colSpan={3} className="px-10 py-2 text-left">
+                  <span className="text-slate-600 text-sm italic">
+                    {workout.notes}
+                  </span>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       )}
