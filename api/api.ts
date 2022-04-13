@@ -24,4 +24,12 @@ class Api {
     );
     return await response.json();
   }
+  static async deleteWorkout(workoutId: string): Promise<IStandardResponse> {
+    const response = await fetch("/api", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ workoutId }),
+    });
+    return await response.json();
+  }
 }

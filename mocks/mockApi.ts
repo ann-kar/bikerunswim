@@ -9,4 +9,7 @@ export class MockApi {
   static async getWorkouts(userId: string): Promise<IWorkout[]> {
     return await mockWorkoutList.filter((workout) => workout.userId === userId);
   }
+  static async deleteWorkout(workoutId: string): Promise<IStandardResponse> {
+    return await { statusCode: 200, message: "workout deleted" };
+  }
 }
