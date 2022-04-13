@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { IsString, IsDateString, ValidateNested } from "class-validator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 
@@ -42,6 +42,10 @@ const AddWorkout: NextPage = () => {
 
   const [workoutParts, setWorkoutParts] = useState<IPartialWorkout[]>([]);
   const [disciplines, setDisciplines] = useState<Discipline[]>([]);
+
+  useEffect(() => {
+    workoutParts.filter((part) => disciplines.includes(part.discipline));
+  }, [disciplines]);
 
   const handleDisciplineChoice = (value: any) => {
     setDisciplines((prevDisciplines: Discipline[]) => {
