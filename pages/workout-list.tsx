@@ -21,7 +21,7 @@ const WorkoutList = () => {
         {workouts &&
           workouts.map((workout) => {
             return (
-              <WorkoutListItem workout={workout}/>
+              <WorkoutListItem key={workout.workoutId} workout={workout}/>
             );
           })}
       </div>
