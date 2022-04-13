@@ -15,6 +15,22 @@
     @apply focus:outline-none focus:border-blue-200 focus:border-2 focus:bg-white;
   }
 
+  .standard-label {
+    @apply text-slate-700 uppercase tracking-wide text-xs font-bold;
+  }
+
+  .standard-input {
+    @apply bg-gray-100 text-gray-700 border rounded py-3 px-4;
+  }
+
+  .error {
+  @apply text-red-500/70 text-xs italic;
+  }
+
+  .btn-disabled {
+  @apply disabled:bg-gray-100 disabled:text-gray-400 disabled:border disabled:border-gray-200;
+  }
+
   input:checked + label {
 
     @apply bg-blue-300 border-2 border-blue-50 shadow-inner;
