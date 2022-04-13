@@ -8,18 +8,18 @@ export const DistanceInput = ({ register, errors }: DistanceInputProps) => {
   return (
     <>
       <input
-        className="appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight  input-focus"
+        className="w-52 mb-4 standard-input input-focus text-2xl"
         id="distanceInMeters"
         type="number"
-        defaultValue={2.25}
-        step={0.01}
+        defaultValue={0}
+        step={"any"}
         {...register("distanceInMeters", {
-          setValueAs: (v: string) => Number(v) * 1000,
+          setValueAs: (v: string) => (Number(v) * 1000).toFixed(3)
         })}
       />
-      <p className="text-red-500 text-xs italic">
+      <p className="error">
         {errors.distanceInMeters?.message &&
-          "distance must be greater than zero"}
+          "distance must be at least 1m long"}
       </p>
     </>
   );
