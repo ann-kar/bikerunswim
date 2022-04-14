@@ -1,10 +1,9 @@
+import { useFormContext } from "react-hook-form";
 
-interface DistanceInputProps {
-    register?:any;
-    errors?:any;
-}
+export const DistanceInput = () => {
 
-export const DistanceInput = ({ register, errors }: DistanceInputProps) => {
+  const { register, formState: {errors} } = useFormContext();
+
   return (
     <>
       <input
@@ -14,12 +13,13 @@ export const DistanceInput = ({ register, errors }: DistanceInputProps) => {
         defaultValue={0}
         step={"any"}
         {...register("distanceInMeters", {
-          setValueAs: ((v: string) => Number((Number(v) * 1000).toFixed(3)))
+          setValueAs: (v: string) => Number((Number(v) * 1000).toFixed(3)),
         })}
       />
       <p className="error">
-        {errors.distanceInMeters?.message &&
-          "distance must be at least 1m long"}
+        {errors.distanceInMeters?.message
+        && "distance must be at least 1m long"
+      }
       </p>
     </>
   );

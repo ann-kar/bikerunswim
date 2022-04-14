@@ -1,7 +1,7 @@
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { Min, IsString, IsIn, IsInt, Max } from "class-validator";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { IPartialWorkout, Discipline } from "../interfaces/IWorkout";
 import { DistanceInput } from "./DistanceInput";
 
@@ -20,21 +20,30 @@ export class PartialWorkout implements IPartialWorkout {
 const resolver = classValidatorResolver(PartialWorkout);
 
 export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PartialWorkout>({ resolver });
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
   const onSubmit = (data: PartialWorkout) => {
+
+    console.log("partial submit: ", data)
+
     setIsDisabled(true);
     setParts((prevParts: PartialWorkout[]) => [...prevParts, data]);
   };
 
+  const methods = useForm<PartialWorkout>({ resolver });
+
   return (
+    <FormProvider {...methods}>
     <form
       className="container mx-auto max-w-[300px]"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={methods.handleSubmit(onSubmit)}
     >
         <h2 className="w-full text-center mt-4 mb-6 uppercase font-semibold text-lg">
           {discipline}
@@ -47,7 +56,7 @@ export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
           >
             DISTANCE IN KM
           </label>
-          <DistanceInput register={register} errors={errors} />
+          <DistanceInput />
         </div>
         <div className="w-52 mx-auto mb-4">
           <label
@@ -79,7 +88,7 @@ export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
         >
           save this part
         </button>
-
     </form>
+    </FormProvider>
   );
 };
