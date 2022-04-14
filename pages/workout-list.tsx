@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Footer } from "../components/Footer";
 
+import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { WorkoutListItem } from "../components/WorkoutListItem";
+import { WorkoutList } from "../components/WorkoutList";
 import { IWorkout } from "../interfaces/IWorkout";
 import { MockApi } from "../mocks/mockApi";
 
@@ -18,14 +18,7 @@ const WorkoutListPage = () => {
   return (
     <main className="flex h-[100vh] flex-col">
       <Header label="see your workouts" />
-      <div className="w-full grow flex-wrap">
-        {workouts &&
-          workouts.map((workout) => {
-            return (
-              <WorkoutListItem key={workout.workoutId} workout={workout} />
-            );
-          })}
-      </div>
+      <WorkoutList workouts={workouts} />
       <Footer link="./" label="home" />
     </main>
   );
