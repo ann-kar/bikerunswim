@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { IsString, IsDateString, ValidateNested } from "class-validator";
+import { IsString, IsDateString, ValidateNested, isNotEmpty, IsNotEmpty } from "class-validator";
 import { useEffect, useState } from "react";
 import { Type } from "class-transformer";
 import "reflect-metadata";
@@ -20,6 +20,7 @@ export class Workout implements IWorkout {
   userId!: string;
   @ValidateNested({ each: true })
   @Type(() => PartialWorkout)
+  @IsNotEmpty()
   parts!: PartialWorkout[];
   notes!: string;
 }
@@ -154,6 +155,7 @@ export const WorkoutForm = ({ defaultData }: { defaultData?: IWorkout }) => {
         <button className="full-w mx-auto mt-6 mb-8 hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white">
           submit workout
         </button>
+          <p className="error">{errors.parts && "isNotEmpty" && "please provide data for at least one discipline"}</p>
       </form>
     </>
   );
