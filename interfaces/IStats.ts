@@ -1,64 +1,27 @@
 import { Discipline } from "./IWorkout";
 
-export interface IStats {
-  top: {
-    avgSpeed: number;
-    distance: number;
-    duration: number;
-    favoriteSport?: {
-      name: string;
-      total: number;
-    };
-  };
-  avg: {
-    avgSpeed: number;
-    distance: number;
-    duration: number;
-  };
-  total: {
-    distance: number;
-    duration: number;
-    sport: [
-      {
-        name: string;
-        total: number;
-      }
-    ];
-  };
+export interface IStatsRequest {
+  userId?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
-export interface IStatsRequest {
-  startDate: string;
-  endDate: string;
-  discipline?: Discipline;
+export interface IWorkoutStats {
+  discipline: Discipline;
+  speed: number;
+  distance: number;
+  duration: number;
+}
+
+export interface ITotalWorkoutStats {
+  discipline: Discipline;
+  distance: number;
+  duration: number;
+  workoutsCount: number;
 }
 
 export interface IStatsResponse {
-  request: IStatsRequest;
-  stats: {
-    top: {
-      avgSpeed: number;
-      distance: number;
-      duration: number;
-      favoriteSport?: {
-        name: string;
-        total: number;
-      };
-    };
-    avg: {
-      avgSpeed: number;
-      distance: number;
-      duration: number;
-    };
-    total: {
-      distance: number;
-      duration: number;
-      sport: [
-        {
-          name: string;
-          total: number;
-        }
-      ];
-    };
-  };
+    topWorkouts: IWorkoutStats[]; //dane dla najlepszego treningu danej dyscypliny - tablica wszystkihc dyscyplin
+    avgWorkouts: IWorkoutStats[]; //średnie wartości dla sumy wszystkich treningów danej dyscypliny - też tablica
+    totalWorkouts: ITotalWorkoutStats[]; //suma distance i duration (tutaj pomijamy speed)
 }
