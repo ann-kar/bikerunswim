@@ -1,6 +1,8 @@
 import { IWorkout } from "../interfaces/IWorkout";
 import { IStandardResponse } from "../interfaces/IApi";
 import { mockWorkoutList } from "../mocks/mockWorkoutList";
+import { mockStats } from "./mockStats";
+import { IStats } from "../interfaces/IStats";
 
 export class MockApi {
   static async sendWorkout(data: IWorkout): Promise<IStandardResponse> {
@@ -11,5 +13,8 @@ export class MockApi {
   }
   static async deleteWorkout(workoutId: string): Promise<IStandardResponse> {
     return await { statusCode: 200, message: "workout deleted" };
+  }
+  static async getStats(userId: string): Promise<IStats> {
+    return await mockStats;
   }
 }
