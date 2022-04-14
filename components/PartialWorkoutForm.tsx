@@ -7,14 +7,13 @@ import { DistanceInput } from "./DistanceInput";
 
 export class PartialWorkout implements IPartialWorkout {
   @Min(1)
-  @IsInt()
-  @Max(10000000)
+  @Max(1000)
   distanceInMeters!: number;
   @IsString()
   @IsIn(["swimming", "biking", "running"])
   discipline!: Discipline;
   @IsInt()
-  @Min(1)
+  @Min(60)
   durationInSeconds!: number;
 }
 
@@ -71,7 +70,7 @@ export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
             defaultValue={0}
           />
           <p className="error">
-            {errors.durationInSeconds?.message}
+            {errors.durationInSeconds?.message && "workout must be at least 10 seconds long"}
           </p>
         </div>
         <button
