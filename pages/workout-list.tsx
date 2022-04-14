@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Footer } from "../components/Footer";
 
 import { Header } from "../components/Header";
 import { WorkoutListItem } from "../components/WorkoutListItem";
@@ -15,16 +16,17 @@ const WorkoutList = () => {
   }, []);
 
   return (
-    <main>
+    <main className="flex h-[100vh] flex-col">
       <Header label="see your workouts" />
-      <div>
+      <div className="w-full grow flex-wrap">
         {workouts &&
           workouts.map((workout) => {
             return (
-              <WorkoutListItem key={workout.workoutId} workout={workout}/>
+              <WorkoutListItem key={workout.workoutId} workout={workout} />
             );
           })}
       </div>
+      <Footer link="./" label="home" />
     </main>
   );
 };
