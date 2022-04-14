@@ -1,9 +1,14 @@
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { Min, IsString, IsIn, IsInt, Max } from "class-validator";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { IPartialWorkout, Discipline } from "../interfaces/IWorkout";
+import { Button } from "./Button";
 import { DistanceInput } from "./DistanceInput";
+import { DurationInput } from "./DurationInput";
+import { HiddenInput } from "./HiddenInput";
+import { InputCnt } from "./InputCnt";
+import { Label } from "./Label";
 
 export class PartialWorkout implements IPartialWorkout {
   @Min(1)
@@ -19,76 +24,42 @@ export class PartialWorkout implements IPartialWorkout {
 
 const resolver = classValidatorResolver(PartialWorkout);
 
-export const PartialWorkoutForm = ({ discipline, setParts }: any) => {
+interface PartialWorkoutFormProps {
+  setParts: Dispatch<SetStateAction<IPartialWorkout[]>>;
+  discipline: string;
+}
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PartialWorkout>({ resolver });
-
+export const PartialWorkoutForm = ({
+  discipline,
+  setParts,
+}: PartialWorkoutFormProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const methods = useForm<PartialWorkout>({ resolver });
 
   const onSubmit = (data: PartialWorkout) => {
-
-    console.log("partial submit: ", data)
-
     setIsDisabled(true);
     setParts((prevParts: PartialWorkout[]) => [...prevParts, data]);
   };
 
-  const methods = useForm<PartialWorkout>({ resolver });
-
   return (
     <FormProvider {...methods}>
-    <form
-      className="container mx-auto max-w-[300px]"
-      onSubmit={methods.handleSubmit(onSubmit)}
-    >
+      <form
+        className="container mx-auto max-w-[300px]"
+        onSubmit={methods.handleSubmit(onSubmit)}>
         <h2 className="w-full text-center mt-4 mb-6 uppercase font-semibold text-lg">
           {discipline}
         </h2>
-        <input type="hidden" value={discipline} {...register("discipline")} />
-        <div className="w-52 mx-auto mb-4">
-          <label
-            className="block mb-2 mt-6 standard-label"
-            htmlFor="distanceInMeters"
-          >
-            DISTANCE IN KM
-          </label>
+        <HiddenInput value={discipline} regName="discipline" />
+        <InputCnt>
+          <Label htmlFor="distanceInMeters" label="DISTANCE IN KM" />
           <DistanceInput />
-        </div>
-        <div className="w-52 mx-auto mb-4">
-          <label
-            className="block mb-2 mt-6 standard-label"
-            htmlFor="durationInSeconds"
-          >
-            DURATION (hh:mm:ss)
-          </label>
-          <input
-            className="min-w-full mb-4 standard-input input-focus text-2xl"
-            id="durationInSeconds"
-            type="time"
-            step="1"
-            {...register("durationInSeconds", {
-              setValueAs: (v) =>
-                Number(v[0] + v[1]) * 3600 +
-                Number(v[3] + v[4]) * 60 +
-                Number(v[6] + v[7]),
-            })}
-            defaultValue={0}
-          />
-          <p className="error">
-            {errors.durationInSeconds?.message && "workout must be at least 10 seconds long"}
-          </p>
-        </div>
-        <button
-          disabled={isDisabled}
-          className="block mx-auto w-6/12 mb-8 py-2 px-3 text-sm uppercase tracking-wide font-bold bg-white text-blue-500 border border-blue-400 rounded hover:text-white hover:bg-blue-500 btn-disabled"
-        >
-          save this part
-        </button>
-    </form>
+        </InputCnt>
+        <InputCnt>
+          <Label htmlFor="durationInSeconds" label="DURATION (hh:mm:ss)" />
+          <DurationInput />
+        </InputCnt>
+        <Button isDisabled={isDisabled} label={"save this part"} />
+      </form>
     </FormProvider>
   );
 };
