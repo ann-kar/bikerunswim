@@ -6,7 +6,7 @@ import { WorkoutListItem } from "../components/WorkoutListItem";
 import { IWorkout } from "../interfaces/IWorkout";
 import { MockApi } from "../mocks/mockApi";
 
-const WorkoutList = () => {
+const WorkoutListPage = () => {
   const [mockUserId, setMockUserId] = useState<string>("1");
   const [workouts, setWorkouts] = useState<IWorkout[]>([]);
 
@@ -31,4 +31,4 @@ const WorkoutList = () => {
   );
 };
 
-export default WorkoutList;
+export default WorkoutListPage;
