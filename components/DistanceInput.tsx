@@ -14,7 +14,7 @@ export const DistanceInput = ({ register, errors }: DistanceInputProps) => {
         defaultValue={0}
         step={"any"}
         {...register("distanceInMeters", {
-          setValueAs: (v: string) => (Number(v) * 1000).toFixed(3)
+          setValueAs: ((v: string) => Number((Number(v) * 1000).toFixed(3)))
         })}
       />
       <p className="error">
