@@ -7,7 +7,7 @@ import { DistanceInput } from "./DistanceInput";
 
 export class PartialWorkout implements IPartialWorkout {
   @Min(1)
-  @Max(1000)
+  @Max(1000000)
   distanceInMeters!: number;
   @IsString()
   @IsIn(["swimming", "biking", "running"])
