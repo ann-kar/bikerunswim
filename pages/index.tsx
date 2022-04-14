@@ -14,15 +14,21 @@ const Home: NextPage = () => {
       <main className="flex h-[100vh] flex-col">
         <Header label="Welcome back!" />
         <div className="w-full  grow flex-wrap bg-blue-50">
-          <div className="flex h-[50%] w-full py-8 justify-start">
-            <div className="w-9/12 border-2 text-blue-900 text-lg border-blue-300 rounded-xl rounded-l-none py-3 px-3">
+          <div className="flex align-center h-[50%] w-full py-8 justify-center">
+            <a
+              className="hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white"
+              href="./workout-list"
+            >
               see your recent workouts
-            </div>
+            </a>
           </div>
-          <div className="flex h-[50%] w-full py-8 justify-end">
-            <h3 className="w-9/12 border-2 text-blue-900 text-lg border-blue-300 rounded-xl rounded-r-none text-right py-3 px-3">
+          <div className="flex align-center h-[50%] w-full py-8 justify-center">
+            <a
+              className="hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white"
+              href="./user-stats"
+            >
               check out your statistics
-            </h3>
+            </a>
           </div>
         </div>
         <Footer link="./add-workout" label="Log a new workout" />
