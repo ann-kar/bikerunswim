@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-export const DistanceInput = () => {
+export const DistanceInput = ({index}:{index: number}) => {
 
   const { register, formState: {errors} } = useFormContext();
 
@@ -12,15 +12,10 @@ export const DistanceInput = () => {
         type="number"
         defaultValue={0}
         step={"any"}
-        {...register("distanceInMeters", {
+        {...register(`parts.${index}.distanceInMeters`, {
           setValueAs: (v: string) => Number((Number(v) * 1000).toFixed(3)),
         })}
       />
-      <p className="error">
-        {errors.distanceInMeters?.message
-        && "distance must be at least 1m long"
-      }
-      </p>
     </>
   );
 };

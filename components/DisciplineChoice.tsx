@@ -1,8 +1,10 @@
+import { useFormContext } from "react-hook-form";
 import { Discipline } from "../interfaces/IWorkout";
-import { CheckboxInput } from "./CheckboxInput";
-import { Label } from "./Label";
+import { CheckboxInput } from "./atoms/CheckboxInput";
+import { Label } from "./atoms/Label";
 
 export const DisciplineChoice = ({ disciplines, setDisciplines }: any) => {
+
   const handleDisciplineChoice = (value: any) => {
     setDisciplines((prevDisciplines: Discipline[]) => {
       if (prevDisciplines.includes(value)) {
@@ -21,6 +23,7 @@ export const DisciplineChoice = ({ disciplines, setDisciplines }: any) => {
           name="discipline"
           value="biking"
           icon="biking.svg"
+
           onChange={(e: any) => handleDisciplineChoice(e.target.value)}
         />
         <CheckboxInput
