@@ -18,12 +18,15 @@ const resolver = classValidatorResolver(WorkoutClass);
 
 export const WorkoutForm = () => {
   const [disciplines, setDisciplines] = useState<Discipline[]>([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const methods = useForm<WorkoutClass>({ resolver });
 
   const onSubmit = async (data: IWorkout) => {
-    console.log(data);
     const response = await MockApi.sendWorkout(data);
-    console.log(response);
+    if (response.statusCode === 200) {
+      setIsSubmitted(true);
+      methods.reset();
+    }
   };
 
   return (
@@ -55,13 +58,22 @@ export const WorkoutForm = () => {
           <HiddenInput value={"sampleUserId"} regName={"userId"} />
           <Label htmlFor="notes" label={"notes"} />
           <NotesInput />
-          <small className="error">{methods.formState.errors.notes?.message}</small>
-          <Button label={"submitWorkout"}/>
           <small className="error">
-            {methods.formState.errors.parts &&
-              "isNotEmpty" &&
-              "please provide data for at least one discipline"}
+            {methods.formState.errors.notes?.message}
           </small>
+          <div className="mt-8 flex flex-col justify-center">
+            <Button label={"submit"} />
+            {isSubmitted && (
+              <small className="text-sm  text-center font-semibold text-emerald-500">
+                Workout added!
+              </small>
+            )}
+            <small className="error text-center">
+              {methods.formState.errors.parts &&
+                "isNotEmpty" &&
+                "please provide data for at least one discipline"}
+            </small>
+          </div>
         </form>
       </FormProvider>
     </>
