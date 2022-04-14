@@ -17,11 +17,17 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any) => { // TODO: refactor
     setEditModeOn(false);
+    console.log(data);
     const tempWorkoutData = workoutData;
     if (tempWorkoutData) {
       tempWorkoutData.notes = data.notes;
+      tempWorkoutData.date = data.date;
+      tempWorkoutData.parts[0].distanceInMeters =
+        Number(data.parts[0].distanceInMeters) * 1000;
+      tempWorkoutData.parts[1].distanceInMeters =
+        Number(data.parts[1].distanceInMeters) * 1000;
     }
     setWorkoutData(tempWorkoutData);
   };
@@ -65,9 +71,17 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="hidden"></input>
-        <div className="bg-blue-100/90 border-t border-blue-900/20 p-3 flex justify-between">
+        <div className="bg-blue-50/70 border-t border-slate-300/40 p-3 text-sm font-semibold py-4 flex justify-between">
           <span>
-            <span className="px-2">{workoutData?.date}</span>
+            {editModeOn ? (
+              <input
+                type="date"
+                defaultValue={workoutData?.date}
+                {...register("date")}
+              />
+            ) : (
+              <span className="px-2">{workoutData?.date}</span>
+            )}
             <span>
               {workoutData?.parts.map((part, i) => {
                 return (
@@ -101,7 +115,7 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
         </div>
         {isOpen && (
           <div>
-            <table className="border-t  pb-2 table-auto w-full text-center">
+            <table className="border-t  pb-2 w-full table-auto  text-center">
               <thead className="uppercase text-xs text-slate-700 bg-slate-50">
                 <tr>
                   <th className="p-1 bg-slate-100/50">discipline</th>
@@ -114,25 +128,41 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
               </thead>
               <tbody>
                 {workoutData &&
-                  workoutData.parts.map((part) => {
+                  workoutData.parts.map((part, i) => {
                     return (
-                      <tr className="border-t" key={`row-${part.discipline}`}>
-                        <td className="p-2 text-xs font-semibold">
-                          {part.discipline.toUpperCase()}
-                        </td>
-                        <td className="p-4 flex justify-center align-center">
-                          <span>{part.distanceInMeters / 1000} km</span>
-                        </td>
-                        <td className="p-2">
-                          {toHours(part.durationInSeconds)}
-                        </td>
-                      </tr>
+                      <>
+                        <tr className="border-t" key={`row-${part.discipline}`}>
+                          <td className="p-2 w-1/3 text-xs font-semibold">
+                            {part.discipline.toUpperCase()}
+                          </td>
+                          <td className="p-2 w-1/3">
+                            {editModeOn ? (
+                              <input
+                                id="distanceInMeters"
+                                type="number"
+                                step="any"
+                                className="w-28 leading-tight standard-input input-focus text-lg"
+                                defaultValue={part.distanceInMeters / 1000}
+                                {...register(`parts.${i}.distanceInMeters`, {
+                                  setValueAs: (v: string) =>
+                                    Number(Number(v).toFixed(3)),
+                                })}
+                              />
+                            ) : (
+                              <span>{part.distanceInMeters / 1000} km</span>
+                            )}
+                          </td>
+                          <td className="p-2 w-1/3">
+                            {toHours(part.durationInSeconds)}
+                          </td>
+                        </tr>
+                      </>
                     );
                   })}
               </tbody>
               <tfoot className="border-t bg-stone-100/50">
                 <tr>
-                  <td colSpan={5} className="px-10 py-2 text-left">
+                  <td colSpan={3} className="px-10 py-2 text-left">
                     <span className="text-slate-600 text-sm italic flex align-center justify-between">
                       {editModeOn ? (
                         <textarea
@@ -145,7 +175,7 @@ export const WorkoutListItem = ({ workout }: { workout: IWorkout }) => {
                         />
                       )}
                       {editModeOn && (
-                        <button className="full-w mx-auto m-4 hover:bg-blue-500 text-blue-700 hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-xs font-bold bg-white">
+                        <button className="mx-auto m-4 hover:bg-blue-500 text-blue-700 hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-xs font-bold bg-white">
                           save changes
                         </button>
                       )}
