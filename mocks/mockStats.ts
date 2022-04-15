@@ -12,7 +12,7 @@ export const mockStats = {
       duration: 1600,
     }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
     totalWorkouts: {
-      distance: 10000000,
+      distance: 146700,
       duration: 360000,
       workoutsCount: 37,
     } //suma distance i duration (tutaj pomijamy speed)
@@ -20,7 +20,7 @@ export const mockStats = {
   running: {
     topWorkout: {
       speed: 10,
-      distance: 10000,
+      distance: 34100,
       duration: 3600,
     }, //dane dla najlepszego treningu danej dyscypliny
     avgOfWorkouts: {
@@ -29,7 +29,7 @@ export const mockStats = {
       duration: 1600,
     }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
     totalWorkouts: {
-      distance: 10000000,
+      distance: 20100,
       duration: 360000,
       workoutsCount: 12,
     } //suma distance i duration (tutaj pomijamy speed)
@@ -46,7 +46,7 @@ export const mockStats = {
       duration: 1600,
     }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
     totalWorkouts: {
-      distance: 10000000,
+      distance: 5350,
       duration: 360000,
       workoutsCount: 7,
     } //suma distance i duration (tutaj pomijamy speed)
