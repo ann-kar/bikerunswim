@@ -61,15 +61,18 @@ export const WorkoutForm = () => {
           <small className="error">
             {methods.formState.errors.notes?.message}
           </small>
-          <div className="mt-8 flex flex-col justify-center">
-            <Button label={"submit"} />
+          <div className="mt-8 mb-8 flex flex-col justify-center">
+            {isSubmitted? <a
+            className="block mx-auto w-6/12 mb-8 py-2 text-center px-3 text-sm uppercase tracking-wide font-bold bg-white text-blue-500 border border-blue-400 rounded hover:text-white hover:bg-blue-500"
+            href="./add-workout">add new workout</a>: <Button label={"submit"} /> }
+
             {isSubmitted && (
               <small className="text-sm  text-center font-semibold text-emerald-500">
                 Workout added!
               </small>
             )}
             <small className="error text-center">
-              {methods.formState.errors.parts &&
+              {methods.formState.errors && methods.formState.errors.parts &&
                 "isNotEmpty" &&
                 "please provide data for at least one discipline"}
             </small>
