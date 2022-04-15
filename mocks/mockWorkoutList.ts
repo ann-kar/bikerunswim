@@ -9,12 +9,12 @@ export const mockWorkoutList: IWorkout[] = [
       {
         discipline: "biking",
         distanceInMeters: 2022,
-        durationInSeconds: 343360,
+        durationInSeconds: 3600,
       },
       {
         discipline: "running",
         distanceInMeters: 2022,
-        durationInSeconds: 343360,
+        durationInSeconds: 3670,
       },
     ],
     notes: "evening workout",
@@ -27,7 +27,7 @@ export const mockWorkoutList: IWorkout[] = [
       {
         discipline: "biking",
         distanceInMeters: 2422,
-        durationInSeconds: 144060,
+        durationInSeconds: 7670,
       },
     ],
     notes: "morning workout",
