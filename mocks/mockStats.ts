@@ -1,28 +1,54 @@
-import { IStats } from "../interfaces/IStats";
 
-export const mockStats: IStats = {
-  top: {
-    avgSpeed: 10,
-    distance: 100,
-    duration: 36000,
-    favoriteSport: {
-      name: "running",
-      total: 23,
-    },
+export const mockStats = {
+  cycling: {
+    topWorkout: {
+      speed: 20,
+      distance: 15000,
+      duration: 3700,
+    }, //dane dla najlepszego treningu danej dyscypliny
+    avgOfWorkouts: {
+      speed: 6,
+      distance: 5000,
+      duration: 1600,
+    }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
+    totalWorkouts: {
+      distance: 10000000,
+      duration: 360000,
+      workoutsCount: 37,
+    } //suma distance i duration (tutaj pomijamy speed)
   },
-  avg: {
-    avgSpeed: 3500,
-    distance: 3000,
-    duration: 3600,
+  running: {
+    topWorkout: {
+      speed: 10,
+      distance: 10000,
+      duration: 3600,
+    }, //dane dla najlepszego treningu danej dyscypliny
+    avgOfWorkouts: {
+      speed: 6,
+      distance: 5000,
+      duration: 1600,
+    }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
+    totalWorkouts: {
+      distance: 10000000,
+      duration: 360000,
+      workoutsCount: 12,
+    } //suma distance i duration (tutaj pomijamy speed)
   },
-  total: {
-    distance: 1500,
-    duration: 360000,
-    sport: [
-      {
-        name: "biking",
-        total: 33434,
-      },
-    ],
-  },
-};
+  swimming: {
+    topWorkout: {
+      speed: 7,
+      distance: 5000,
+      duration: 1800,
+    }, //dane dla najlepszego treningu danej dyscypliny
+    avgOfWorkouts: {
+      speed: 6,
+      distance: 5000,
+      duration: 1600,
+    }, //średnie wartości dla sumy wszystkich treningów danej dyscypliny
+    totalWorkouts: {
+      distance: 10000000,
+      duration: 360000,
+      workoutsCount: 7,
+    } //suma distance i duration (tutaj pomijamy speed)
+  }
+}
