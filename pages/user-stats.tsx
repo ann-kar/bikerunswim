@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { StatItem } from "../components/StatItem";
 import { DoughnutChart } from "../components/stats/DoughnutChart";
 import { IStatsResponse } from "../interfaces/IStats";
 import { MockApi } from "../mocks/mockApi";
@@ -39,7 +40,7 @@ const UserStatsPage = () => {
     <main className="flex h-[100vh] flex-col">
       <Header label="check your statistics" />
       {stats && (
-        <div className="px-4 py-8 grow flex-wrap">
+        <div className="px-4 py-8 grow flex-wrap max-w-md mx-auto">
           <h2 className="ml-10 pb-10 text-right leading-7 text-lg text-violet-900">
             You have completed
             <span className="font-bold text-violet-500">
@@ -68,6 +69,9 @@ const UserStatsPage = () => {
               Total workouts per discipline
             </small>
           </div>
+          <StatItem discipline="biking" stats={stats.cycling} />
+          <StatItem discipline="running" stats={stats.running} />
+          <StatItem discipline="swimming" stats={stats.swimming} />
         </div>
       )}
       <Footer link="./" label="home" />
