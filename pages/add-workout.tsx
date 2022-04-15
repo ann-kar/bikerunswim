@@ -9,7 +9,7 @@ const AddWorkout: NextPage = () => {
     <div>
       <main className="flex h-[100vh] flex-col">
         <Header label={"Log a new training"} />
-        <div className="w-full grow flex-wrap bg-blue-50">
+        <div className="w-full grow flex-wrap bg-gray-50">
           <WorkoutForm />
         </div>
         <Footer label="home" link="./" />
