@@ -6,6 +6,9 @@ import { DoughnutChart } from "../components/stats/DoughnutChart";
 import { WorkoutList } from "../components/WorkoutList";
 
 const Home: NextPage = () => {
+
+  const value = process.env.NEXT_PUBLIC_MOCK_DATA;
+  
   return (
     <div>
       <Head>
@@ -14,7 +17,8 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex h-[100vh] flex-col">
         <Header label="Welcome back!" />
-        <div className="w-full max-w-lg mx-auto mt-2 grow flex-wrap bg-white ">
+        <h2>{value}</h2>
+         <div className="w-full max-w-lg mx-auto mt-2 grow flex-wrap bg-white ">
           <div className="flex flex-wrap align-center h-[50%] w-full py-8 justify-center ">
             <a
               className="w-8/12 block text-indigo-700 border border-green-100/80 rounded-lg uppercase tracking-wide text-sm font-bold bg-violet-200/80"
