@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { DoughnutChart } from "../components/stats/DoughnutChart";
 import { WorkoutList } from "../components/WorkoutList";
 
 const Home: NextPage = () => {
@@ -13,23 +14,33 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex h-[100vh] flex-col">
         <Header label="Welcome back!" />
-        <div className="w-full  grow flex-wrap bg-blue-50">
-          <div className="flex flex-wrap align-center h-[50%] w-full py-8 justify-center">
+        <div className="w-full max-w-lg mx-auto mt-2 grow flex-wrap bg-white ">
+          <div className="flex flex-wrap align-center h-[50%] w-full py-8 justify-center ">
             <a
-              className="text-blue-700 border border-blue-500 hover:text-white  hover:bg-blue-500 rounded block uppercase tracking-wide text-sm font-bold bg-white"
+              className="w-8/12 block text-indigo-700 border border-green-100/80 rounded-lg uppercase tracking-wide text-sm font-bold bg-violet-200/80"
               href="./workout-list">
-                <div className="pointer-events-none">
-                  <p className=" py-6 px-4">see your recent workouts</p>
-              <WorkoutList />
+              <div className="pointer-events-none relative h-[30vh] pt-12 overflow-hidden">
+                <div className="scale-[0.7] grayscale-[50%] origin-top-left">
+                  <WorkoutList />
                 </div>
-
+                <p className="bg-white p-4 shadow-md min-w-full absolute text-md md:text-lg top-0 left-0">
+                  see your recent workouts
+                </p>
+              </div>
             </a>
           </div>
-          <div className="flex align-center h-[50%] w-full py-8 justify-center">
+          <div className="flex align-center justify-center">
             <a
-              className="hover:bg-blue-500 w-6/12 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded block uppercase tracking-wide text-sm font-bold bg-white"
+              className="w-8/12 block text-violet-800 border border-violet-200/50 rounded-lg uppercase tracking-wide text-sm font-bold bg-violet-100"
               href="./user-stats">
-              check out your statistics
+              <div className="pointer-events-none relative h-[33vh]  overflow-hidden">
+                <div className=" ">
+                  <DoughnutChart />
+                </div>
+                <p className="bg-white p-4 shadow-md min-w-full absolute text-md md:text-lg top-0 left-0">
+                  check out your statistics
+                </p>
+              </div>
             </a>
           </div>
         </div>
