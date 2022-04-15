@@ -11,9 +11,9 @@ export const WorkoutList = () => {
     const res = MockApi.getWorkouts(mockUserId);
     res.then((res) => setWorkouts(res));
   }, []);
-  
+
   return (
-    <div className="w-full grow flex-wrap">
+    <div className="w-full grow mx-auto max-w-md flex-wrap">
       {workouts &&
         workouts.map((workout) => {
           return <WorkoutListItem key={workout.workoutId} workout={workout} />;
