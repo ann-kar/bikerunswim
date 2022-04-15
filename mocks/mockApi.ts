@@ -2,7 +2,6 @@ import { IWorkout } from "../interfaces/IWorkout";
 import { IStandardResponse } from "../interfaces/IApi";
 import { mockWorkoutList } from "../mocks/mockWorkoutList";
 import { mockStats } from "./mockStats";
-import { IStats } from "../interfaces/IStats";
 
 export class MockApi {
   static async sendWorkout(data: IWorkout): Promise<IStandardResponse> {
