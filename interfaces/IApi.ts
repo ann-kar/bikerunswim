@@ -6,6 +6,8 @@ export interface IStandardResponse {
   error?: string;
 }
 
-export interface IApi {
+interface IApi {
   sendWorkout(data: IWorkout): Promise<IStandardResponse>;
+  getWorkouts(userId: string): Promise<IWorkout[]>;
+  deleteWorkout(workoutId: string): Promise<IStandardResponse>;
 }
