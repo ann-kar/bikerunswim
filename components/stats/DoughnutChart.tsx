@@ -1,3 +1,4 @@
+
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -5,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const DoughnutChart = ({labels, values}:any) => {
 
-  ChartJS.overrides.doughnut.plugins.legend.position = "bottom";
+  ChartJS.overrides.doughnut.plugins.legend.position = "right";
   const options = {
     layout: {
       padding: 10
