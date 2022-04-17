@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "reflect-metadata";
 
 import { MockApi } from "../mocks/mockApi";
@@ -21,7 +21,12 @@ export const WorkoutForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const methods = useForm<WorkoutClass>({ resolver });
 
+  useEffect(() => {
+    methods.setValue('userId', 'sampleUserId')
+  }, [])
+
   const onSubmit = async (data: IWorkout) => {
+    console.log(data);
     const response = await MockApi.sendWorkout(data);
     if (response.statusCode === 200) {
       setIsSubmitted(true);
@@ -55,7 +60,7 @@ export const WorkoutForm = () => {
               );
             }
           })}
-          <HiddenInput value={"sampleUserId"} regName={"userId"} />
+          <HiddenInput registerAs={"userId"} />
           <Label htmlFor="notes" label={"notes"} />
           <NotesInput />
           <small className="error">
@@ -72,9 +77,9 @@ export const WorkoutForm = () => {
               </small>
             )}
             <small className="error text-center">
-              {methods.formState.errors && methods.formState.errors.parts &&
+              {/* {methods.formState.errors && methods.formState.errors.parts &&
                 "isNotEmpty" &&
-                "please provide data for at least one discipline"}
+                "please provide data for at least one discipline"} */}
             </small>
           </div>
         </form>

@@ -4,6 +4,7 @@ import { DurationInput } from "./atoms/DurationInput";
 import { HiddenInput } from "./atoms/HiddenInput";
 import { InputCnt } from "./InputCnt";
 import { Label } from "./atoms/Label";
+import { useEffect, useState } from "react";
 
 interface PartialWorkoutFormProps {
   discipline?: string;
@@ -15,15 +16,24 @@ export const PartialWorkoutForm = ({
   index,
 }: PartialWorkoutFormProps) => {
   const {
+    setValue,
     formState: { errors },
   } = useFormContext();
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    setValue(`parts.${index}.discipline`, discipline);
+  }, []);
+
+  //@ts-ignore
+  const handleInput = ({ target: { value } }) => setPhone(value);
 
   return (
     <>
       <h2 className="w-full text-center mt-4 mb-6 uppercase font-semibold text-lg">
         {discipline}
       </h2>
-      <HiddenInput value={discipline} regName={`parts.${index}.discipline`} />
+      <HiddenInput registerAs={`parts.${index}.discipline`} />
       <InputCnt>
         <Label htmlFor={`distanceInMeters`} label="DISTANCE IN KM" />
         <DistanceInput index={index} />
@@ -34,11 +44,6 @@ export const PartialWorkoutForm = ({
       <InputCnt>
         <Label htmlFor={`durationInSeconds`} label="DURATION (hh:mm:ss)" />
         <DurationInput index={index} />
-        <small>
-          {errors.parts &&
-            errors.parts[index]?.durationInSeconds.message &&
-            "a workout must be at least 1 minute long"}
-        </small>
       </InputCnt>
     </>
   );
