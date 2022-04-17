@@ -1,28 +1,44 @@
+import InputMask from "react-input-mask";
 import { useFormContext } from "react-hook-form";
+import { toSeconds } from "../../helpers/timeConverters";
+import { HiddenInput } from "./HiddenInput";
 
-const stringToSeconds = (v: string) => {
-  return (
-    Number(v[0] + v[1]) * 3600 + Number(v[3] + v[4]) * 60 + Number(v[6] + v[7])
-  );
+let formatChars = {
+  "0": "[0]",
+  "5": "[0-5]",
+  "9": "[0-9]",
 };
 
 export const DurationInput = ({ index }: { index: number }) => {
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
+  const handleChange = (e: string) => {
+    const inSeconds = toSeconds(e);
+    setValue(`parts.${index}.durationInSeconds`, inSeconds);
+  };
+
   return (
     <>
-      <input
-        className="min-w-full mb-4 standard-input input-focus text-2xl"
-        id="durationInSeconds"
-        type="time"
-        step="1"
-        {...register(`parts.${index}.durationInSeconds`, {
-          setValueAs: (v) => stringToSeconds(v)
-        })}
+      <InputMask
+        className="standard-input text-xl"
+        onChange={(e: any) => {
+          handleChange(e.target.value);
+        }}
+        mask="09:59:59"
+        //@ts-ignore
+        formatChars={formatChars}
       />
+      <HiddenInput registerAs={`parts.${index}.durationInSeconds`}/>
+      <small className="error">
+        {(errors.parts &&
+          errors.parts[index]?.durationInSeconds?.message &&
+          "every workout must be at least 1 minute long") ||
+          ""}
+      </small>
     </>
   );
 };

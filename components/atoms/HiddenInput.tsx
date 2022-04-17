@@ -1,13 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-export const HiddenInput = ({
-  value,
-  regName,
-}: {
-  value: any;
-  regName: string;
-}) => {
+export const HiddenInput = ({ registerAs }: { registerAs: string }) => {
   const { register } = useFormContext();
-
-  return <input type="hidden" value={value} {...register(regName)} />;
+  return <input className="hidden" {...register(registerAs)} />;
 };

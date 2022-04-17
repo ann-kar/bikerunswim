@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { Min, Max, IsString, IsIn, IsInt, IsDateString, ValidateNested, IsNotEmpty } from "class-validator";
+import { Min, Max, IsString, IsIn, IsInt, IsDateString, ValidateNested, IsNotEmpty, Matches, Equals } from "class-validator";
 import { IPartialWorkout, Discipline, IWorkout } from "../interfaces/IWorkout";
 
 export class PartialWorkoutClass implements IPartialWorkout {
