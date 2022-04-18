@@ -11,14 +11,15 @@ let formatChars = {
 
 export const DurationInput = ({ index }: { index: number }) => {
   const {
-    register,
     setValue,
+    trigger,
     formState: { errors },
   } = useFormContext();
 
   const handleChange = (e: string) => {
     const inSeconds = toSeconds(e);
     setValue(`parts.${index}.durationInSeconds`, inSeconds);
+    trigger(`parts.${index}.durationInSeconds`);
   };
 
   return (
@@ -32,7 +33,7 @@ export const DurationInput = ({ index }: { index: number }) => {
         //@ts-ignore
         formatChars={formatChars}
       />
-      <HiddenInput registerAs={`parts.${index}.durationInSeconds`}/>
+      <HiddenInput registerAs={`parts.${index}.durationInSeconds`} />
       <small className="error">
         {(errors.parts &&
           errors.parts[index]?.durationInSeconds?.message &&
