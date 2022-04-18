@@ -25,6 +25,7 @@ export const DurationInput = ({ index }: { index: number }) => {
   return (
     <>
       <InputMask
+          data-testid="durationInSeconds"
         className="standard-input text-xl"
         onChange={(e: any) => {
           handleChange(e.target.value);

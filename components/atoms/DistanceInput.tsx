@@ -16,6 +16,7 @@ export const DistanceInput = ({ index }: { index: number }) => {
   return (
     <>
       <input
+      data-testid="distanceInMeters"
         className="w-52 mb-4 standard-input input-focus text-2xl"
         id="distanceInMeters"
         type="number"
