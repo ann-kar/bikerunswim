@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { Min, Max, IsString, IsIn, IsInt, IsDateString, ValidateNested, IsNotEmpty, Matches, Equals } from "class-validator";
+import { Min, Max, IsString, IsIn, IsInt, IsDateString, ValidateNested, IsNotEmpty, Matches, Equals, ArrayNotEmpty } from "class-validator";
 import { IPartialWorkout, Discipline, IWorkout } from "../interfaces/IWorkout";
 
 export class PartialWorkoutClass implements IPartialWorkout {
@@ -21,7 +21,7 @@ export class PartialWorkoutClass implements IPartialWorkout {
     userId!: string;
     @ValidateNested({ each: true })
     @Type(() => PartialWorkoutClass)
-    @IsNotEmpty()
+    @ArrayNotEmpty()
     parts!: PartialWorkoutClass[];
     notes!: string;
   }

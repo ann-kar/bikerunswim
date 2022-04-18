@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import React from "react";
-import {
-  FormProvider,
-  useForm,
-} from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import "reflect-metadata";
@@ -13,11 +10,11 @@ import { NotesInput } from "../components/atoms/NotesInput";
 import { HiddenInput } from "../components/atoms/HiddenInput";
 import { PartialWorkoutForms } from "../components/atoms/PartialWorkoutForms";
 import { WorkoutClass } from "../validation/validationClasses";
+import { Button } from "./atoms/Button";
 
 const resolver = classValidatorResolver(WorkoutClass);
 
 export const WorkoutForm = () => {
-
   const methods = useForm<WorkoutClass>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -44,7 +41,11 @@ export const WorkoutForm = () => {
         <PartialWorkoutForms />
         <Label htmlFor="notes" label={"notes"} />
         <NotesInput />
-        <input type="submit" />
+        <Button label={"submit"} />
+        <small className="error">
+          {methods.formState.errors.parts &&
+            "please select at least one activity"}
+        </small>
       </form>
     </FormProvider>
   );
