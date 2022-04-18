@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  act,
   fireEvent,
   getAllByRole,
   getByRole,
@@ -8,7 +9,7 @@ import {
 } from "@testing-library/react";
 import { WorkoutForm } from "../components/WorkoutForm";
 
-describe("WorkoutForm renders the required form fields", () => {
+describe(`${WorkoutForm.name} renders the required form fields`, () => {
   it("should render date input", () => {
     render(<WorkoutForm />);
     expect(screen.getByTestId("date")).toBeInTheDocument();
@@ -31,12 +32,32 @@ describe("WorkoutForm renders the required form fields", () => {
       fireEvent.click(checkbox);
       expect(screen.getByTestId("distanceInMeters")).toBeInTheDocument();
     });
-    
+
     it("should render duration input upon click", () => {
       const context = render(<WorkoutForm />);
       const checkbox = getAllByRole(context.container, "checkbox")[0];
       fireEvent.click(checkbox);
       expect(screen.getByTestId("durationInSeconds")).toBeInTheDocument();
+    });
+
+    it("should render the correct number of partial forms upon multiple clicks", () => {
+      const context = render(<WorkoutForm />);
+      const bikingCheckbox = getAllByRole(context.container, "checkbox")[0];
+      const swimmingCheckbox = getAllByRole(context.container, "checkbox")[2];
+
+      act(() => {
+        bikingCheckbox.dispatchEvent(
+          new MouseEvent("click", { bubbles: true })
+        );
+        bikingCheckbox.dispatchEvent(
+          new MouseEvent("click", { bubbles: true })
+        );
+        swimmingCheckbox.dispatchEvent(
+          new MouseEvent("click", { bubbles: true })
+        );
+      });
+
+      expect(screen.getAllByTestId("date").length).toBe(1);
     });
   });
 });
