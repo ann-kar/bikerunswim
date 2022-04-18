@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -11,6 +11,7 @@ import { HiddenInput } from "../components/atoms/HiddenInput";
 import { PartialWorkoutForms } from "../components/atoms/PartialWorkoutForms";
 import { WorkoutClass } from "../validation/validationClasses";
 import { Button } from "./atoms/Button";
+import Link from "next/link";
 
 const resolver = classValidatorResolver(WorkoutClass);
 
@@ -21,11 +22,17 @@ export const WorkoutForm = () => {
     resolver,
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   useEffect(() => {
     methods.setValue("userId", "sampleUserId");
   }, []);
 
-  const onSubmit = (data: any) => console.log("data", data);
+  const onSubmit = (data: any) => {
+    console.log("data", data);
+    methods.reset();
+    setIsSubmitted(true);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -41,7 +48,18 @@ export const WorkoutForm = () => {
         <PartialWorkoutForms />
         <Label htmlFor="notes" label={"notes"} />
         <NotesInput />
-        <Button label={"submit"} />
+        <small className="block m-4 text-md text-center font-bold text-emerald-500">
+          {isSubmitted && "Workout added!"}
+        </small>
+        {isSubmitted ? (
+          <Link href="./add-workout">
+            <a className="block mx-auto w-6/12 my-4 text-center py-2 px-3 text-sm uppercase tracking-wide font-bold bg-white text-blue-500 border border-blue-400 rounded hover:text-white hover:bg-blue-500 btn-disabled">
+              Add another workout
+            </a>
+          </Link>
+        ) : (
+          <Button label={"submit"} />
+        )}
         <small className="error">
           {methods.formState.errors.parts &&
             "please select at least one activity"}
