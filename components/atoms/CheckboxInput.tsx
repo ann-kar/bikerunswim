@@ -1,14 +1,12 @@
 interface CheckboxInputProps {
-  name: string;
-  value: string;
   icon: string;
   onChange: any;
-  register?: any;
+  value: string;
 }
 
 export const CheckboxInput = ({
-  value,
   icon,
+  value,
   onChange,
 }: CheckboxInputProps) => {
   return (
@@ -17,7 +15,7 @@ export const CheckboxInput = ({
         id={value}
         type="checkbox"
         className="opacity-0 absolute h-8 w-8"
-        onChange={(e: any) => onChange(e)}
+        onChange={onChange}
         value={value}
       />
       <label
