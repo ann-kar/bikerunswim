@@ -17,6 +17,7 @@
     "class-validator": "^0.13.2",
     "immer": "^9.0.12",
     "next": "12.1.4",
+    "nock": "^13.2.4",
     "react": "18.0.0",
     "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0",
