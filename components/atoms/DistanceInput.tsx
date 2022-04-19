@@ -26,7 +26,7 @@ export const DistanceInput = ({ index }: { index: number }) => {
         }}
       />
       <HiddenInput registerAs={`parts.${index}.distanceInMeters`} />
-      <small className="error">
+      <small className="error" data-testid="distance-error">
         {errors.parts &&
           errors.parts[index]?.distanceInMeters?.message &&
           "every workout must be at least 1 meter far"}
