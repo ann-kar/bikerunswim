@@ -7,8 +7,6 @@ import { WorkoutList } from "../components/WorkoutList";
 
 const Home: NextPage = () => {
 
-  const value = process.env.NEXT_PUBLIC_MOCK_DATA;
-  
   return (
     <div>
       <Head>
@@ -17,7 +15,6 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex h-[100vh] flex-col">
         <Header label="Welcome back!" />
-        <h2>{value}</h2>
          <div className="w-full max-w-lg mx-auto mt-2 grow flex-wrap bg-white ">
           <div className="flex flex-wrap align-center h-[50%] w-full py-8 justify-center ">
             <a
